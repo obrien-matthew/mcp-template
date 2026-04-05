@@ -1,0 +1,60 @@
+_min_copier_version: "9.0.0"
+_subdirectory: template
+_templates_suffix: .jinja
+
+service_name:
+  type: str
+  help: "Human-readable service name (e.g., Spotify, Steam, Plex)"
+  validator: "{% if not service_name %}Required{% endif %}"
+
+service_slug:
+  type: str
+  help: "Lowercase slug for module names (e.g., spotify, steam, plex)"
+  default: "{{ service_name | lower | replace(' ', '_') | replace('-', '_') }}"
+  validator: "{% if not service_slug | regex_search('^[a-z][a-z0-9_]*$') %}Must be lowercase letters, digits, underscores; start with a letter{% endif %}"
+
+package_name:
+  type: str
+  help: "PyPI package name (e.g., mcp-spotify, mcp-plex-server)"
+  default: "mcp-{{ service_slug | replace('_', '-') }}"
+
+module_name:
+  type: str
+  when: false
+  default: "{{ service_slug }}_mcp"
+
+description:
+  type: str
+  help: "One-line project description"
+  default: "MCP server for {{ service_name }}"
+
+service_dependency:
+  type: str
+  help: "Main service client library (e.g., spotipy>=2.24.0, plexapi>=4.16.0)"
+  validator: "{% if not service_dependency %}Required{% endif %}"
+
+author_name:
+  type: str
+  help: "Author name"
+  default: "Matthew O'Brien"
+
+author_email:
+  type: str
+  help: "Author email"
+  default: "obrien.mlotwis@gmail.com"
+
+topic_classifier:
+  type: str
+  help: "PyPI topic classifier (e.g., Topic :: Multimedia :: Sound/Audio)"
+  default: "Topic :: Software Development"
+
+coverage_threshold:
+  type: int
+  help: "Minimum code coverage percentage for CI"
+  default: 50
+  validator: "{% if coverage_threshold < 0 or coverage_threshold > 100 %}Must be 0-100{% endif %}"
+
+github_org:
+  type: str
+  help: "GitHub organization or username"
+  default: "obrien-matthew"

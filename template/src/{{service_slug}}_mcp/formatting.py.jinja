@@ -1,0 +1,8 @@
+"""Response formatters for {{ service_name }} data."""
+
+from typing import Any
+
+
+def format_item(item: Any) -> dict[str, Any]:
+    """Format a {{ service_name }} item into an LLM-friendly dict."""
+    return {"raw": str(item)}

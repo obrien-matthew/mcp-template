@@ -1,0 +1,64 @@
+[project]
+name = "{{ package_name }}"
+version = "0.1.0"
+description = "{{ description }}"
+readme = "README.md"
+license = "MIT"
+authors = [
+    { name = "{{ author_name }}", email = "{{ author_email }}" }
+]
+requires-python = ">=3.14"
+keywords = ["mcp", "{{ service_slug }}", "model-context-protocol"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "{{ topic_classifier }}",
+]
+dependencies = [
+    "mcp>=1.27.0,<2",
+    "{{ service_dependency }}",
+]
+
+[project.urls]
+Repository = "https://github.com/{{ github_org }}/{{ package_name }}"
+Issues = "https://github.com/{{ github_org }}/{{ package_name }}/issues"
+
+[tool.uv.build-backend]
+module-name = "{{ module_name }}"
+
+[build-system]
+requires = ["uv_build>=0.11.3,<0.12.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "ruff>=0.11.0",
+    "pyright>=1.1.400",
+    "pytest>=8.0",
+    "pytest-cov>=6.0",
+]
+
+[tool.ruff]
+target-version = "py314"
+line-length = 88
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM"]
+
+[tool.pyright]
+pythonVersion = "3.14"
+typeCheckingMode = "standard"
+venvPath = "."
+venv = ".venv"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.coverage.run]
+source = ["{{ module_name }}"]
+omit = ["src/{{ module_name }}/auth.py"]
+
+[project.scripts]
+{{ package_name }} = "{{ module_name }}:main"

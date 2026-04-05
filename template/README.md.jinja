@@ -1,0 +1,50 @@
+# {{ package_name }}
+
+{{ description }}
+
+## Prerequisites
+
+- Python 3.14+
+- [uv](https://docs.astral.sh/uv/)
+
+## Setup
+
+```bash
+uv sync
+```
+
+## Configuration
+
+### Claude Desktop
+
+Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "{{ service_slug }}": {
+      "command": "uvx",
+      "args": ["{{ package_name }}"]
+    }
+  }
+}
+```
+
+### Claude Code
+
+```bash
+claude mcp add {{ service_slug }} -- uvx {{ package_name }}
+```
+
+## Tools
+
+<!-- Add your MCP tools here -->
+
+## Development
+
+```bash
+uv sync
+uv run pytest tests/ -x -q
+uv run ruff check src/ tests/
+uv run pyright src/
+```

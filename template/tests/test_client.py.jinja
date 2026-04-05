@@ -1,0 +1,9 @@
+"""Tests for the {{ service_name }} client."""
+
+from {{ module_name }}.client import {{ service_name }}Client
+
+
+class TestClient:
+    def test_ping(self):
+        client = {{ service_name }}Client()
+        assert client.ping() == "pong"
