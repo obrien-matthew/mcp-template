@@ -1,0 +1,4 @@
+pre-push:
+  commands:
+    auto-tag:
+      run: scripts/auto-tag.sh
