@@ -1,5 +1,16 @@
 """MCP server for {{ service_name }}."""
 
+from importlib.metadata import PackageNotFoundError, version
+
 from mcp.server.fastmcp import FastMCP
 
 mcp = FastMCP("{{ package_name }}")
+
+
+@mcp.tool()
+def get_server_version() -> str:
+    """Return the installed version of the {{ package_name }} server."""
+    try:
+        return version("{{ package_name }}")
+    except PackageNotFoundError:
+        return "unknown"

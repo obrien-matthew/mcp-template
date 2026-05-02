@@ -1,6 +1,8 @@
 """Tests for MCP server setup."""
 
-from {{ module_name }}.server import mcp
+from importlib.metadata import version
+
+from {{ module_name }}.server import get_server_version, mcp
 
 
 class TestServerCreation:
@@ -9,3 +11,8 @@ class TestServerCreation:
 
     def test_server_name(self):
         assert mcp.name == "{{ package_name }}"
+
+
+class TestGetServerVersion:
+    def test_returns_installed_version(self):
+        assert get_server_version() == version("{{ package_name }}")
